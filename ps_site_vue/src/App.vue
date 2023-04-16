@@ -3,7 +3,7 @@
     <nav class="navbar is-dark">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item"
-          ><strong>GurunLuft</strong></router-link
+          ><strong>Grünluft</strong></router-link
         >
         <a
           aria-label="menu"
@@ -34,9 +34,9 @@
               >
               <router-link to="/cart" class="button is-success">
                 <span class="icon">
-                  <i class="fa-cart-shopping"></i>
+                  <i class="fa fa-shopping-cart"></i>
                 </span>
-                <span>Cart</span>
+                <span>Basket</span>
               </router-link>
             </div>
           </div>
@@ -48,7 +48,7 @@
     </section>
 
     <footer class="footer">
-      <p class="has-text-right">Copyrigth (c) 2023</p>
+      <p class="has-text-right">Copyright (c) 2023</p>
     </footer>
   </div>
 </template>

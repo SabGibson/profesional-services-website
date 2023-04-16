@@ -6,7 +6,7 @@ from .models import Product
 from .serializers import ProductSerializer
 
 class LatestProductsLists(APIView):
-    def get(self,requests,format=None):
+    def get(self,request,format=None):
         products = Product.objects.all()[:4]
         serializer = ProductSerializer(products,many=True)
         return Response(serializer.data)
@@ -14,11 +14,11 @@ class LatestProductsLists(APIView):
 class ProductDetail(APIView):
     def get_object(self,category_slug,product_slug):
         try:
-            return Product.objects.filter(category_slug).get(slug=product_slug)
+            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
         except Product.DoesNotExist:
             raise Http404
         
-    def get(self,request,category_slug,product_slug):
+    def get(self,request,category_slug,product_slug,format=None):
         product = self.get_object(category_slug,product_slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)

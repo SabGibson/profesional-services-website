@@ -32,7 +32,7 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.name
     def get_abs_url(self):
-        return f'{self.category}/{self.slug}/'
+        return f'{self.category.slug}/{self.slug}/'
     
     def get_image(self):
         if self.image:

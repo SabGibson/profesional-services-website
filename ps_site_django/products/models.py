@@ -31,6 +31,7 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
     def get_abs_url(self):
         return f'{self.category.slug}/{self.slug}/'
     

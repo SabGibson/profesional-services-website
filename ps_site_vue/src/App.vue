@@ -32,11 +32,11 @@
               <router-link to="/log-in" class="button is-light"
                 >Login</router-link
               >
-              <router-link to="/cart" class="button is-success">
+              <router-link to="/basket" class="button is-success">
                 <span class="icon">
                   <i class="fa fa-shopping-cart"></i>
                 </span>
-                <span>Basket</span>
+                <span>Basket ({{ basketTotalSize }})</span>
               </router-link>
             </div>
           </div>
@@ -56,7 +56,29 @@
 <script>
 export default {
   data() {
-    return { showMobileMenu: false };
+    return {
+      showMobileMenu: false,
+      basket: {
+        items: [],
+      },
+    };
+  },
+  beforeCreate() {
+    this.$store.commit("initStore");
+  },
+  mounted() {
+    this.basket = this.$store.state.basket;
+  },
+  computed: {
+    basketTotalSize() {
+      let totalLenght = 0;
+
+      for (let i = 0; i < this.basket.items.length; i++) {
+        totalLenght += this.basket.items[i].quantity;
+      }
+
+      return totalLenght;
+    },
   },
 };
 </script>

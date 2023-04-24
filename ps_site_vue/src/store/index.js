@@ -31,6 +31,9 @@ export default createStore({
 
       localStorage.setItem("basket", JSON.stringify(state.basket));
     },
+    setIsLoading(state, status) {
+      state.loading = status;
+    },
   },
   actions: {},
   modules: {},

@@ -5,7 +5,7 @@ import Category from "../views/Categoryview.vue";
 import Search from "../views/SearchView.vue";
 import Basket from "../views/BasketView.vue";
 import Signup from "../views/SignupView.vue";
-
+import Login from "../views/LoginView.vue";
 const routes = [
   {
     path: "/",
@@ -26,6 +26,11 @@ const routes = [
     path: "/sign-up",
     name: "sign-up",
     component: Signup,
+  },
+  {
+    path: "/log-in",
+    name: "log-in",
+    component: Login,
   },
   {
     path: "/about",

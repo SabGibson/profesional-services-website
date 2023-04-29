@@ -17,6 +17,14 @@ export default createStore({
       } else {
         localStorage.setItem("basket", JSON.stringify(state.basket));
       }
+
+      if (localStorage.getItem("token")) {
+        state.token = localStorage.getItem("token");
+        state.isAuthenticated = true;
+      } else {
+        state.token = "";
+        state.isAuthenticated = false;
+      }
     },
     addToBasket(state, item) {
       const exists = state.basket.items.filter(
@@ -33,6 +41,14 @@ export default createStore({
     },
     setIsLoading(state, status) {
       state.loading = status;
+    },
+    setToken(state, token) {
+      state.token = token;
+      state.isAuthenticated = true;
+    },
+    removeToken(state, token) {
+      state.token = "";
+      state.isAuthenticated = false;
     },
   },
   actions: {},

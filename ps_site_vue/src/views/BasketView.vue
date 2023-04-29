@@ -20,6 +20,7 @@
               v-for="item in basket.items"
               v-bind:key="item.product.id"
               v-bind:initialItem="item"
+              v-on:removeFromBasket="removeFromBasket"
             />
           </tbody>
         </table>
@@ -32,7 +33,7 @@
         </div>
       </div>
       <div class="column is-12 box">
-        <h2 class="subtitle">Summary</h2>
+        <h2>Summary</h2>
         <p>
           <strong>£{{ basketTotalPrice.toFixed(2) }}</strong>
         </p>
@@ -81,6 +82,12 @@ export default {
 
   methods: {
     async getBasket() {},
+
+    removeFromBasket(item) {
+      this.basket.items = this.basket.items.filter((i) => {
+        i.product.id !== item.product.id;
+      });
+    },
   },
 };
 </script>

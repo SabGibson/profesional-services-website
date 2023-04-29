@@ -4,6 +4,7 @@ import Product from "../views/ProductView.vue";
 import Category from "../views/Categoryview.vue";
 import Search from "../views/SearchView.vue";
 import Basket from "../views/BasketView.vue";
+import Signup from "../views/SignupView.vue";
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: "/basket",
     name: "basket",
     component: Basket,
+  },
+  {
+    path: "/sign-up",
+    name: "sign-up",
+    component: Signup,
   },
   {
     path: "/about",

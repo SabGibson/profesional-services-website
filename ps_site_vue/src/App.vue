@@ -52,7 +52,15 @@
 
           <div class="navbar-item">
             <div class="buttons">
-              <router-link to="/log-in" class="button is-light"
+              <button
+                to="/"
+                class="button is-light"
+                v-if="$store.state.isAuthenticated"
+                @click="logout"
+              >
+                Logout
+              </button>
+              <router-link to="/log-in" class="button is-light" v-else
                 >Login</router-link
               >
               <router-link to="/basket" class="button is-success">
@@ -97,7 +105,7 @@ export default {
   },
   beforeCreate() {
     this.$store.commit("initStore");
-    const token = this.$store.state.cart;
+    const token = this.$store.state.token;
 
     if (token) {
       axios.defaults.headers.common["Authorization"] = "Token" + token;
@@ -108,6 +116,19 @@ export default {
   mounted() {
     this.basket = this.$store.state.basket;
   },
+  methods: {
+    logout() {
+      axios.defaults.headers.common["Authorization"] = "";
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem("userid");
+
+      this.$store.commit("removeToken");
+      this.$router.push("/");
+    },
+  },
+
   computed: {
     basketTotalSize() {
       let totalLenght = 0;

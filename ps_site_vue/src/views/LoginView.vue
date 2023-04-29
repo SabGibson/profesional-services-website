@@ -3,7 +3,7 @@
     <div class="columns is-multiline">
       <div class="column is-4 is-offset-4">
         <h1 class="title has-text-centered">Login</h1>
-        <form @submit.prevent="submitform">
+        <form @submit.prevent="submitForm">
           <div class="field">
             <label for="">Username</label>
             <div class="control">
@@ -61,8 +61,8 @@ export default {
         password: this.password,
       };
 
-      axios
-        .post("/api/v1/users/", formData)
+      await axios
+        .post("/api/v1/token/login/", formData)
         .then((res) => {
           const token = res.data.auth_token;
           this.$store.commit("setToken", token);

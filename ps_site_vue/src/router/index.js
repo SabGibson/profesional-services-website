@@ -6,6 +6,8 @@ import Search from "../views/SearchView.vue";
 import Basket from "../views/BasketView.vue";
 import Signup from "../views/SignupView.vue";
 import Login from "../views/LoginView.vue";
+import Account from "../views/AccountView.vue";
+import store from "../store";
 const routes = [
   {
     path: "/",
@@ -33,6 +35,14 @@ const routes = [
     component: Login,
   },
   {
+    path: "/account",
+    name: "Account",
+    component: Account,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
     path: "/about",
     name: "about",
     // route level code-splitting
@@ -56,6 +66,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (
+    to.matched.some((record) => record.meta.requireLogin) &&
+    !store.state.isAuthrnticated
+  ) {
+    next({ name: "log-in", query: { to: to.path } });
+  } else {
+    next();
+  }
 });
 
 export default router;

@@ -46,10 +46,10 @@ export default {
     updateBasket() {
       localStorage.setItem("basket", JSON.stringify(this.$store.state.basket));
     },
-  },
-  removeFromBasket(item) {
-    this.$emit("removeFromBasket", item);
-    this.updateBasket();
+    removeFromBasket(item) {
+      this.$emit("removeFromBasket", item);
+      this.updateBasket();
+    },
   },
 };
 </script>

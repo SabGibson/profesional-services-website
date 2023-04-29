@@ -64,7 +64,13 @@ export default {
   mounted() {
     document.title = "Basket" + " | Grünluft";
     this.basket = this.$store.state.basket;
-    this.getBasket();
+  },
+  methods: {
+    removeFromBasket(item) {
+      this.basket.items = this.basket.items.filter((i) => {
+        i.product.id !== item.product.id;
+      });
+    },
   },
   computed: {
     basketTotalLength() {
@@ -77,16 +83,6 @@ export default {
       return this.basket.items.reduce((acc, curVal) => {
         return (acc += curVal.quantity * curVal.product.price);
       }, 0);
-    },
-  },
-
-  methods: {
-    async getBasket() {},
-
-    removeFromBasket(item) {
-      this.basket.items = this.basket.items.filter((i) => {
-        i.product.id !== item.product.id;
-      });
     },
   },
 };

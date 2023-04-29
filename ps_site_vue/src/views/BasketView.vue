@@ -31,6 +31,18 @@
           </strong>
         </div>
       </div>
+      <div class="column is-12 box">
+        <h2 class="subtitle">Summary</h2>
+        <p>
+          <strong>£{{ basketTotalPrice.toFixed(2) }}</strong>
+        </p>
+
+        <hr />
+
+        <router-link to="/basket/checkout" class="button is-dark"
+          >Proceed to checkout</router-link
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -57,6 +69,12 @@ export default {
     basketTotalLength() {
       return this.basket.items.reduce((acc, curVal) => {
         return (acc += curVal.quantity);
+      }, 0);
+    },
+
+    basketTotalPrice() {
+      return this.basket.items.reduce((acc, curVal) => {
+        return (acc += curVal.quantity * curVal.product.price);
       }, 0);
     },
   },

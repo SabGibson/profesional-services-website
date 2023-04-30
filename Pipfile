@@ -13,6 +13,7 @@ stripe = "*"
 pytest = "*"
 pytest-watch = "*"
 pytest-django = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

@@ -8,6 +8,7 @@ import Signup from "../views/SignupView.vue";
 import Login from "../views/LoginView.vue";
 import Account from "../views/AccountView.vue";
 import Checkout from "../views/CheckoutView.vue";
+import Success from "../views/SuccessView.vue";
 import store from "../store";
 const routes = [
   {
@@ -47,6 +48,14 @@ const routes = [
     path: "/basket/checkout",
     name: "checkout",
     component: Checkout,
+    // meta: {
+    //   requireLogin: true,
+    // },
+  },
+  {
+    path: "/basket/success",
+    name: "success",
+    component: Success,
     // meta: {
     //   requireLogin: true,
     // },

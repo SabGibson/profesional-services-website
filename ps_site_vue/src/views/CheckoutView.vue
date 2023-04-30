@@ -131,6 +131,32 @@ export default {
     getItemtotal(item) {
       return item.quantity * item.product.price;
     },
+    submitForm() {
+      this.errors = [];
+
+      if (this.first_name == "") {
+        this.errors.push("The first name field cannot be empty");
+      }
+
+      if (this.last_name == "") {
+        this.errors.push("The last name field cannot be empty");
+      }
+
+      if (this.email == "") {
+        this.errors.push("The email field cannot be empty");
+      }
+
+      if (this.address == "") {
+        this.errors.push("The address field cannot be empty");
+      }
+
+      if (this.post_code == "") {
+        this.errors.push("The postal code field cannot be empty");
+      }
+      if (this.country == "") {
+        this.errors.push("The postal country field cannot be empty");
+      }
+    },
   },
   computed: {
     basketTotalLength() {

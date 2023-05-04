@@ -50,6 +50,11 @@ export default createStore({
       state.token = "";
       state.isAuthenticated = false;
     },
+    clearBasket(state) {
+      state.basket.items = [];
+
+      localStorage.setItem("basket", JSON.stringify(state.basket));
+    },
   },
   actions: {},
   modules: {},

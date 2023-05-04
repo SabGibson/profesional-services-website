@@ -5,7 +5,7 @@
         <h1 class="title">Order Complete</h1>
       </div>
 
-      <p>Your order has been revieved and will be processed within 24 hours</p>
+      <p>Your order has been recieved and will be processed within 24 hours</p>
     </div>
   </div>
 </template>

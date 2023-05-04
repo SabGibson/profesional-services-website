@@ -113,6 +113,7 @@ export default {
         items: [],
       },
       stripe: {},
+      card: {},
       first_name: "",
       last_name: "",
       email: "",
@@ -126,6 +127,15 @@ export default {
   mounted() {
     document.title = document.title = "Checkout" + " | Grünluft";
     this.basket = this.$store.state.basket;
+
+    if (this.basketTotalLength > 0) {
+      this.stripe = Stripe(
+        "pk_test_51N2bvQKFWIMOcBHMmt9iZvaxTMWhZJJDPUQbfJIzZL7jK9vZPGk3y4pdqofrpSJZFESMJzOOI5HaY6CrWX8Caylf000siPQMDU"
+      );
+      const elements = this.stripe.elements();
+      this.card = elements.create("card", { hidePostalCode: true });
+      this.card.mount("#card-element");
+    }
   },
   methods: {
     getItemtotal(item) {
@@ -156,6 +166,64 @@ export default {
       if (this.country == "") {
         this.errors.push("The postal country field cannot be empty");
       }
+
+      if (!this.errors.length) {
+        this.$store.commit("isLoading", true);
+
+        this.stripe.createToken(this.card).then((res) => {
+          if (res.error) {
+            this.$store.commit("isLoading", false);
+
+            this.errors.push("Something went wrong. Please try again");
+            console.loc(res.error.message);
+          } else {
+            this.stripeTokenHandler(res.token);
+          }
+        });
+      }
+    },
+
+    createToken() {},
+
+    async stripeTokenHandler() {
+      const items = [];
+
+      for (let i = 0; i < this.basket.items.length; i++) {
+        const item = this.basket.items[i];
+
+        const format = {
+          product: item.product.id,
+          quantity: item.quantity,
+          price: item.product.quantity * item.product.price,
+        };
+
+        items.push(format);
+      }
+
+      const order_data = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        email: this.email,
+        address: this.address,
+        postal_code: this.post_code,
+        country: this.country,
+        tel: this.tel,
+        items: items,
+        stripe_token: token.id,
+      };
+
+      await axios
+        .post("/api/v1/checkout/", order_data)
+        .then((res) => {
+          this.$store.commit("clearBasket");
+          this.$router.push("/basket/success");
+        })
+        .catch((err) => {
+          this.errors.push("Somthing went wrong. Please try again");
+          console.log(err);
+        });
+
+      this.$store.commit("isLoading", false);
     },
   },
   computed: {

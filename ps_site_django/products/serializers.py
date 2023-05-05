@@ -39,16 +39,16 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'slug', 'description',
+        fields = ('id', 'name', 'creator', 'slug', 'description',
                   'price', 'category', 'image', 'get_abs_url', 'get_image', 'get_thumbnail', 'images')
 
-    def create(self, validated_data):
-        images_data = validated_data.pop('images', [])
-        category_data = validated_data.pop('category')
-        category, _ = Category.objects.get_or_create(**category_data)
-        creator = self.context['request'].user
-        product = Product.objects.create(
-            creator=creator, category=category, **validated_data)
-        for image_data in images_data:
-            ProductImage.objects.create(product=product, **image_data)
-        return product
+    # def create(self, validated_data):
+    #     images_data = validated_data.pop('images', [])
+    #     category_data = validated_data.pop('category')
+    #     category, _ = Category.objects.get_or_create(**category_data)
+    #     creator = self.context['request'].user
+    #     product = Product.objects.create(
+    #         creator=creator, category=category, **validated_data)
+    #     for image_data in images_data:
+    #         ProductImage.objects.create(product=product, **image_data)
+    #     return product

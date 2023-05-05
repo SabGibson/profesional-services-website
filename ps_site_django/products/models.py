@@ -21,7 +21,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     creator = models.ForeignKey(
-        User, related_name='products', on_delete=models.CASCADE)
+        User, related_name='products_created', on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)

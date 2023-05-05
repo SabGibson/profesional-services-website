@@ -4,14 +4,13 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Product, Category
+from rest_framework.permissions import IsAuthenticated
 from .serializers import ProductSerializer, CategorySerializer
 from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from rest_framework import status
+from .permissions import IsCreatorOrReadOnly
 from django.db.models import Q
-
-
-class ProductCreateView(CreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
 
 class LatestProductsLists(APIView):
@@ -46,6 +45,23 @@ class CategoryDetail(APIView):
         category = self.get_object(category_slug)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
+
+
+class ProductViewSet(viewsets.GenericViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated, IsCreatorOrReadOnly]
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(creator=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, pk=None):
+        product = self.get_object()
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])

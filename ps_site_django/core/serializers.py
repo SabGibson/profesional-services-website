@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
-from accounts.serializer import ProfileSerializer
+from accounts.serializers import ProfileSerializer
 
 
 class CustomUserSerializer(UserSerializer):

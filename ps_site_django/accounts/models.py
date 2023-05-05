@@ -23,6 +23,9 @@ class ProfileEducation(models.Model):
     def __str__(self) -> str:
         return f"{self.institution_name} : {self.qualification_name} - {self.description}"
 
+    class Meta:
+        ordering = ('-date_achieved',)
+
 
 class ProfileEmployment(models.Model):
     profile = models.ForeignKey(
@@ -38,8 +41,11 @@ class ProfileEmployment(models.Model):
     def __str__(self) -> str:
         return f"{self.company_name} : {self.jobe_title} - {self.description}"
 
+    class Meta:
+        ordering = ('-date_started',)
 
-class ProfileCertificates(models.Model):
+
+class ProfileCertifications(models.Model):
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='certifications')
     certification_name = models.CharField(max_length=255)
@@ -49,8 +55,11 @@ class ProfileCertificates(models.Model):
     def __str__(self) -> str:
         return f"{self.certification_name}"
 
+    class Meta:
+        ordering = ('-date_achieved',)
 
-class ProfileSkills(models.Model):
+
+class ProfileSkill(models.Model):
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='skills')
     skill_name = models.CharField(max_length=255)

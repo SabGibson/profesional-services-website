@@ -1,8 +1,10 @@
+from typing import Iterable, Optional
 from django.core.files import File
 from django.db import models
 from io import BytesIO
 from PIL import Image
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Category(models.Model):

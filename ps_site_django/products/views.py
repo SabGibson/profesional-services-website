@@ -7,7 +7,7 @@ from .models import Product, Category
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ProductSerializer, CategorySerializer
 from rest_framework.decorators import api_view
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework import status
 from .permissions import IsCreatorOrReadOnly
 from django.db.models import Q
@@ -47,21 +47,13 @@ class CategoryDetail(APIView):
         return Response(serializer.data)
 
 
-class ProductViewSet(viewsets.GenericViewSet):
+class ProductViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated, IsCreatorOrReadOnly]
 
-    def create(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(creator=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def destroy(self, request, pk=None):
-        product = self.get_object()
-        product.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 @api_view(['POST'])

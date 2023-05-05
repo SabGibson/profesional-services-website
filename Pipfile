@@ -11,10 +11,10 @@ djoser = "*"
 pillow = "*"
 stripe = "*"
 python-dotenv = "*"
+pytest-django = "*"
 
 [dev-packages]
 pytest = "*"
-pytest-watch = "*"
 pytest-django = "*"
 
 [requires]

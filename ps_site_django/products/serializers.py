@@ -11,12 +11,6 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'image', 'image_url')
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email')
-
-
 class ProductSerializer(serializers.ModelSerializer):
     creator = serializers.ReadOnlyField(source='creator.username')
     category = 'CategorySerializer()'

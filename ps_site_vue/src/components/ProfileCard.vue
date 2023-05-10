@@ -1,19 +1,19 @@
 <template>
-  <div class="card">
+  <div class="card profile-card">
     <div class="card-image">
       <figure class="image is-4by3">
-        <img :src="profile.image.get_thumbnail" alt="Profile picture" />
+        <img :src="profile.profile.image.get_thumbnail" alt="Profile picture" />
       </figure>
     </div>
     <div class="card-content">
-      <div class="media">
-        <div class="media-content">
-          <p class="title is-4">{{ profile.name }}</p>
-          <p class="subtitle is-6">{{ profile.user.username }}</p>
+      <div class="profile-content">
+        <div class="proflie-alias">
+          <p class="title is-4">{{ user.name }}</p>
+          <p class="subtitle is-6">{{ user.username }}</p>
         </div>
       </div>
       <div class="content">
-        {{ profile.summary }}
+        {{ user.profile.bio }}
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
 export default {
   name: "ProfileCard",
   props: {
-    profile: {
+    user: {
       type: Object,
       required: true,
     },

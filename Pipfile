@@ -12,6 +12,7 @@ pillow = "*"
 stripe = "*"
 python-dotenv = "*"
 pytest-django = "*"
+model-bakery = "*"
 
 [dev-packages]
 pytest = "*"

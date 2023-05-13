@@ -1,26 +1,41 @@
 <template>
-  <div class="card profile-card">
-    <div class="card-content">
-      <div class="profile-content">
-        <div class="proflie-alias">
-          <p class="title is-4">{{ education.qualification_name }}</p>
-          <p class="subtitle is-6">{{ education.institution_name }}</p>
+  <li class="column is-12">
+    <hr class="styled-hr" />
+    <div class="container">
+      <div class="profile-main">
+        <div class="columns is-multiline is-gapless">
+          <div class="container column is-one-third">
+            <h4 class="is-size-5">
+              {{ education.institution_name }}
+            </h4>
+            <p class="is-size-6 has-text-grey has-text-weight-bold">
+              {{ education.qualification_name }} - {{ education.level }}
+            </p>
+            <p class="is-size-6 has-text-grey has-text-weight-bold">
+              {{ education.date_achieved }}
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="content">
-        {{ education.description }}
+
+        <hr class="styled-hr" />
+
+        <p class="is-size-6">{{ education.description }}</p>
       </div>
     </div>
-  </div>
+  </li>
 </template>
 
 <script>
 export default {
   name: "EducationCard",
   props: {
-    education: {
-      type: Object,
-    },
+    education: Object,
   },
 };
 </script>
+
+<style>
+.figure-container {
+  padding: 0.5rem;
+}
+</style>

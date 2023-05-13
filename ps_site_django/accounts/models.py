@@ -74,7 +74,7 @@ class ProfileEmployment(models.Model):
         Profile, on_delete=models.CASCADE, related_name='employment')
     level = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255)
-    jobe_title = models.CharField(max_length=255)
+    job_title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     date_started = models.DateField()
     date_ended = models.DateField(null=True, blank=True)
@@ -87,7 +87,7 @@ class ProfileEmployment(models.Model):
         ordering = ('-date_started',)
 
 
-class ProfileCertifications(models.Model):
+class ProfileCertification(models.Model):
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='certifications')
     certification_name = models.CharField(max_length=255)

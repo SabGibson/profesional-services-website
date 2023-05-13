@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Profile, ProfileEducation, ProfileEmployment,  ProfileProject, ProfileProjectImage, ProfileCertifications, ProfileSkill
+from .models import Profile, ProfileEducation, ProfileEmployment,  ProfileProject, ProfileProjectImage, ProfileCertification, ProfileSkill
 
 
 class ProfileProjectImageSerializer(serializers.Serializer):
@@ -19,26 +19,26 @@ class ProfileProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'project_name', 'description', 'images')
 
 
-class ProfileSkillSerializer(serializers.Serializer):
+class ProfileSkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileSkill
         fields = ('skill_name', 'description')
 
 
-class ProfileCertificationsSerialier(serializers.Serializer):
+class ProfileCertificationSerialier(serializers.ModelSerializer):
     class Meta:
-        model = ProfileCertifications
-        fields = ('certification_name', 'description')
+        model = ProfileCertification
+        fields = ('certification_name', 'description', 'date_achieved')
 
 
-class ProfileEmploymentSerializer(serializers.Serializer):
+class ProfileEmploymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileEmployment
         fields = ('level', 'company_name', 'job_title', 'description',
                   'date_started', 'date_ended', 'is_present')
 
 
-class ProfileEducationSerializer(serializers.Serializer):
+class ProfileEducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileEducation
         fields = ('level', 'institution_name', 'qualification_name', 'description',
@@ -47,11 +47,12 @@ class ProfileEducationSerializer(serializers.Serializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     projects = ProfileProjectSerializer(many=True)
-    certifications = ProfileCertificationsSerialier(many=True)
+    certifications = ProfileCertificationSerialier(many=True)
     employment = ProfileEmploymentSerializer(many=True)
     education = ProfileEducationSerializer(many=True)
+    skills = ProfileSkillSerializer(many=True)
 
     class Meta:
         model = Profile
         fields = ('id', 'get_image', 'get_thumbnail', 'first_name', 'last_name', 'full_name', 'username', 'bio', 'education', 'employment',
-                  'certifications', 'projects',)
+                  'certifications', 'skills', 'projects',)

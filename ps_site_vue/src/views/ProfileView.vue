@@ -7,11 +7,38 @@
         </div>
         <ProfileCard v-bind:profile="profile" v-bind:key="profile.id" />
         <hr />
-        <ExperienceCard
-          v-for="job in profile.employment"
-          v-bind:job="job"
-          v-bind:key="job.id"
-        />
+        <ul class="column is-8 box">
+          <h4 class="title has-size-4">Experience</h4>
+          <ExperienceCard
+            v-for="job in profile.employment"
+            v-bind:job="job"
+            v-bind:key="job.id"
+          />
+        </ul>
+        <ul class="column is-8 box">
+          <h4 class="title has-size-4">Education</h4>
+          <EducationCard
+            v-for="education in profile.education"
+            v-bind:education="education"
+            v-bind:key="education.id"
+          />
+        </ul>
+        <ul class="column is-8 box">
+          <h4 class="title has-size-4">Skills</h4>
+          <SkillsCard
+            v-for="skill in profile.skills"
+            v-bind:skills="skill"
+            v-bind:key="skill.id"
+          />
+        </ul>
+        <ul class="column is-8 box">
+          <h4 class="title has-size-4">Certifications & Licences</h4>
+          <CertificationCard
+            v-for="skill in profile.certifications"
+            v-bind:skills="skill"
+            v-bind:key="skill.id"
+          />
+        </ul>
       </div>
     </div>
   </div>
@@ -24,6 +51,7 @@ import EducationCard from "../components/EducationCard.vue";
 import ExperienceCard from "../components/ExperienceCard.vue";
 import CertificationCard from "../components/CertificationCard.vue";
 import ProductCard from "../components/ProductCard.vue";
+import SkillsCard from "../components/SkillsCard.vue";
 
 export default {
   name: "profile",
@@ -39,6 +67,7 @@ export default {
     ExperienceCard,
     CertificationCard,
     ProductCard,
+    SkillsCard,
   },
   mounted() {
     this.getProfile();
@@ -73,4 +102,7 @@ export default {
 .title {
   margin-left: 1rem;
 }
+/* .box {
+  background-color: #99d98c;
+} */
 </style>

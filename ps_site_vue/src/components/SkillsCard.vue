@@ -4,12 +4,9 @@
     <div class="container">
       <div class="profile-main">
         <p class="is-size-5 has-text-grey">
-          {{ skills.certification_name }}
+          {{ skills.skill_name }}
         </p>
         <p class="is-size-6 has-text-grey">{{ skills.description }}</p>
-        <p class="is-size-6 has-text-grey">
-          Achieved: {{ skills.date_achieved }}
-        </p>
       </div>
     </div>
   </li>

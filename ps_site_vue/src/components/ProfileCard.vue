@@ -38,7 +38,7 @@ export default {
 
 <style>
 .image {
-  border: 3px solid grey;
+  border: 3px solid #000;
   border-radius: 50%;
 }
 
@@ -46,10 +46,6 @@ export default {
   margin-left: 1.5rem;
   margin-right: 1.5rem;
   margin-top: 0.5rem;
-}
-
-.box {
-  background-color: #caccce;
 }
 
 .figure-container {

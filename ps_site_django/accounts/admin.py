@@ -14,7 +14,7 @@ class EmploymentInline(admin.TabularInline):
 
 
 class CertificationInline(admin.TabularInline):
-    model = ProfileCertifications
+    model = ProfileCertification
     extra = 1
 
 

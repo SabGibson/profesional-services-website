@@ -3,10 +3,15 @@
     <div class="columns is-multiline">
       <div class="column is-12">
         <div class="title">
-          <h1>{{ profile.username }}</h1>
+          <h1>{{ profile.username }}'s Profile</h1>
         </div>
         <ProfileCard v-bind:profile="profile" v-bind:key="profile.id" />
         <hr />
+        <ExperienceCard
+          v-for="job in profile.employment"
+          v-bind:job="job"
+          v-bind:key="job.id"
+        />
       </div>
     </div>
   </div>
@@ -64,3 +69,8 @@ export default {
   },
 };
 </script>
+<style>
+.title {
+  margin-left: 1rem;
+}
+</style>

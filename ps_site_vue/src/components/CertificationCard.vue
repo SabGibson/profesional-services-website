@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "CertCard",
+  name: "CertificationCard",
   props: {
     certification: {
       type: Object,

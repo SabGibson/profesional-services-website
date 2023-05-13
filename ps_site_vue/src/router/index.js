@@ -10,6 +10,7 @@ import Account from "../views/AccountView.vue";
 import Checkout from "../views/CheckoutView.vue";
 import Success from "../views/SuccessView.vue";
 import store from "../store";
+import Profile from "../views/ProfileView.vue";
 const routes = [
   {
     path: "/",
@@ -78,6 +79,15 @@ const routes = [
     path: "/:category_slug/",
     name: "category",
     component: Category,
+  },
+
+  {
+    path: "/profiles/:profile_id",
+    name: "profile",
+    component: Profile,
+    // meta: {
+    //   requireLogin: true,
+    // },
   },
 ];
 

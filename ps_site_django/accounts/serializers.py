@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-
 from .models import Profile, ProfileEducation, ProfileEmployment,  ProfileProject, ProfileProjectImage, ProfileCertifications, ProfileSkill
 
 
@@ -54,5 +53,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'image', 'education', 'employment',
+        fields = ('id', 'get_image', 'get_thumbnail', 'first_name', 'last_name', 'full_name', 'username', 'bio', 'education', 'employment',
                   'certifications', 'projects',)

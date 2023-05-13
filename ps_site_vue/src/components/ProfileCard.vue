@@ -1,19 +1,27 @@
 <template>
-  <div class="card profile-card">
-    <div class="card-image">
-      <figure class="image is-4by3">
-        <img :src="profile.profile.image.get_thumbnail" alt="Profile picture" />
-      </figure>
-    </div>
-    <div class="card-content">
-      <div class="profile-content">
-        <div class="proflie-alias">
-          <p class="title is-4">{{ user.name }}</p>
-          <p class="subtitle is-6">{{ user.username }}</p>
+  <div class="column is-8">
+    <div class="box">
+      <div class="profile-main">
+        <div class="columns is-multiline is-gapless">
+          <figure class="figure-container column is-12">
+            <img
+              class="image is-rounded is-128x128"
+              :src="profile.get_thumbnail"
+            />
+          </figure>
+          <div class="container column is-one-third">
+            <h3 class="is-size-4 has-text-weight-bold">
+              {{ profile.full_name }}
+            </h3>
+            <p class="is-size-6 has-text-grey has-text-weight-bold">
+              @{{ profile.username }}
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="content">
-        {{ user.profile.bio }}
+
+        <hr class="styled-hr" />
+
+        <p class="is-size-6">{{ profile.bio }}</p>
       </div>
     </div>
   </div>
@@ -23,18 +31,32 @@
 export default {
   name: "ProfileCard",
   props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+    profile: Object,
   },
 };
 </script>
 
 <style>
 .image {
-  margin-top: -1.25rem;
-  margin-left: -1.25rem;
-  margin-right: -1.25rem;
+  border: 3px solid grey;
+  border-radius: 50%;
+}
+
+.profile-main {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.box {
+  background-color: #caccce;
+}
+
+.figure-container {
+  padding: 0.5rem;
+}
+
+.styled-hr {
+  border-color: aqua;
 }
 </style>

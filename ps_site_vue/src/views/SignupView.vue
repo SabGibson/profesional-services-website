@@ -5,6 +5,18 @@
         <h1 class="title has-text-centered">Sign up</h1>
         <form @submit.prevent="submitForm">
           <div class="field">
+            <label for="">First name</label>
+            <div class="control">
+              <input type="text" class="input" v-model="first_name" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="">Last name</label>
+            <div class="control">
+              <input type="text" class="input" v-model="last_name" />
+            </div>
+          </div>
+          <div class="field">
             <label for="">Username</label>
             <div class="control">
               <input type="text" class="input" v-model="username" />
@@ -48,6 +60,8 @@ export default {
 
   data() {
     return {
+      first_name: "",
+      last_name: "",
       username: "",
       password: "",
       password2: "",
@@ -72,6 +86,8 @@ export default {
 
       if (!this.errors.length) {
         const formData = {
+          first_name: this.first_name,
+          last_name: this.last_name,
           username: this.username,
           password: this.password,
         };

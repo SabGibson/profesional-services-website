@@ -1,7 +1,7 @@
 <template>
   <div class="page-profile">
     <div class="columns is-multiline">
-      <div class="column is-7">
+      <div class="column is-8">
         <div class="title">
           <h1>{{ profile.username }}'s Profile</h1>
         </div>
@@ -40,7 +40,7 @@
           />
         </ul>
       </div>
-      <div class="column is-5 side-bar">
+      <div class="column is-4 side-bar">
         <ul class="column is-12 box">
           <h4 class="title has-size-4">Projects by {{ profile.first_name }}</h4>
           <ProjectCard
@@ -51,11 +51,17 @@
         </ul>
         <ul class="column is-12 box">
           <h4 class="title has-size-4">Products by {{ profile.first_name }}</h4>
-          <CertificationCard
-            v-for="skill in profile.certifications"
-            v-bind:skills="skill"
-            v-bind:key="skill.id"
+          <ProductCarousel
+            v-if="products.length > 0"
+            v-bind:products="products"
           />
+          <button
+            v-else
+            class="is-dark button is-center load-button"
+            @click="getProducts"
+          >
+            show products
+          </button>
         </ul>
       </div>
     </div>
@@ -70,12 +76,14 @@ import ExperienceCard from "../components/ExperienceCard.vue";
 import CertificationCard from "../components/CertificationCard.vue";
 import ProductCard from "../components/ProductCard.vue";
 import SkillsCard from "../components/SkillsCard.vue";
+import ProductCarousel from "../components/ProductCarousel.vue";
 
 export default {
   name: "profile",
   data() {
     return {
       profile: {},
+      products: {},
     };
   },
   components: {
@@ -86,6 +94,7 @@ export default {
     CertificationCard,
     ProductCard,
     SkillsCard,
+    ProductCarousel,
   },
   mounted() {
     this.getProfile();
@@ -98,6 +107,19 @@ export default {
     },
   },
   methods: {
+    async getProducts() {
+      this.$store.commit("isLoading", true);
+
+      await axios
+        .post("/api/v1/products/search/", { query: this.profile.username })
+        .then((res) => {
+          this.products = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      this.$store.commit("isLoading", false);
+    },
     async getProfile() {
       this.$store.commit("setIsLoading", true);
       const profile_id = this.$route.params.profile_id;
@@ -110,7 +132,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-
       this.$store.commit("setIsLoading", false);
     },
   },
@@ -123,7 +144,8 @@ export default {
 .side-bar {
   margin-top: 5rem;
 }
-/* .box {
-  background-color: #99d98c;
-} */
+.load-button {
+  margin-left: 1rem;
+}
 </style>
+products/search/

@@ -1,11 +1,11 @@
 <template>
-  <div class="column is-8">
+  <div class="column is-12">
     <div class="box">
       <div class="profile-main">
         <div class="columns is-multiline is-gapless">
           <figure class="figure-container column is-12">
             <img
-              class="image is-rounded is-128x128"
+              class="profile image is-rounded is-128x128"
               :src="profile.get_thumbnail"
             />
           </figure>
@@ -37,9 +37,10 @@ export default {
 </script>
 
 <style>
-.image {
+.profile.image {
   border: 3px solid #000;
   border-radius: 50%;
+  background-color: #fff;
 }
 
 .profile-main {

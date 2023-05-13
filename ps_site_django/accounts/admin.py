@@ -22,9 +22,9 @@ class ProjectImageInline(admin.TabularInline):
     model = ProfileProjectImage
 
 
-class ProjectsInline(admin.TabularInline):
+class ProjectsAdmin(admin.ModelAdmin):
     model = ProfileProject
-    inlines = [ProfileProjectImage]
+    inlines = [ProjectImageInline]
     extra = 1
 
 
@@ -39,8 +39,9 @@ class EducationInline(admin.TabularInline):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    inlines = [EducationInline, SkillsInline, ProjectsInline,
+    inlines = [EducationInline, SkillsInline,
                CertificationInline, EmploymentInline]
 
 
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(ProfileProject, ProjectsAdmin)

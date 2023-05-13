@@ -1,13 +1,13 @@
 <template>
   <div class="page-profile">
     <div class="columns is-multiline">
-      <div class="column is-12">
+      <div class="column is-7">
         <div class="title">
           <h1>{{ profile.username }}'s Profile</h1>
         </div>
         <ProfileCard v-bind:profile="profile" v-bind:key="profile.id" />
         <hr />
-        <ul class="column is-8 box">
+        <ul class="column is-12 box">
           <h4 class="title has-size-4">Experience</h4>
           <ExperienceCard
             v-for="job in profile.employment"
@@ -15,7 +15,7 @@
             v-bind:key="job.id"
           />
         </ul>
-        <ul class="column is-8 box">
+        <ul class="column is-12 box">
           <h4 class="title has-size-4">Education</h4>
           <EducationCard
             v-for="education in profile.education"
@@ -23,7 +23,7 @@
             v-bind:key="education.id"
           />
         </ul>
-        <ul class="column is-8 box">
+        <ul class="column is-12 box">
           <h4 class="title has-size-4">Skills</h4>
           <SkillsCard
             v-for="skill in profile.skills"
@@ -31,8 +31,26 @@
             v-bind:key="skill.id"
           />
         </ul>
-        <ul class="column is-8 box">
+        <ul class="column is-12 box">
           <h4 class="title has-size-4">Certifications & Licences</h4>
+          <CertificationCard
+            v-for="cert in profile.certifications"
+            v-bind:skills="cert"
+            v-bind:key="cert.id"
+          />
+        </ul>
+      </div>
+      <div class="column is-5 side-bar">
+        <ul class="column is-12 box">
+          <h4 class="title has-size-4">Projects by {{ profile.first_name }}</h4>
+          <ProjectCard
+            v-for="project in profile.projects"
+            v-bind:project="project"
+            v-bind:key="project.id"
+          />
+        </ul>
+        <ul class="column is-12 box">
+          <h4 class="title has-size-4">Products by {{ profile.first_name }}</h4>
           <CertificationCard
             v-for="skill in profile.certifications"
             v-bind:skills="skill"
@@ -101,6 +119,9 @@ export default {
 <style>
 .title {
   margin-left: 1rem;
+}
+.side-bar {
+  margin-top: 5rem;
 }
 /* .box {
   background-color: #99d98c;

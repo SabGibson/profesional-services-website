@@ -81,7 +81,7 @@ class ProfileEmployment(models.Model):
     is_present = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.company_name} : {self.jobe_title} - {self.description}"
+        return f"{self.company_name} : {self.job_title} - {self.description}"
 
     class Meta:
         ordering = ('-date_started',)
@@ -123,12 +123,9 @@ class ProfileProject(models.Model):
 
 class ProfileProjectImage(models.Model):
 
-    product = models.ForeignKey(
+    profile = models.ForeignKey(
         ProfileProject, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='projects/')
-
-    def __str__(self):
-        return f"Image for {self.product.name}"
 
     def get_image(self):
         if self.image:

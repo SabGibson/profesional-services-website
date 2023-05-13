@@ -1,5 +1,5 @@
 <template>
-  <div class="card cert-card">
+  <div class="cert-card">
     <div class="card-content">
       <div class="media">
         <div class="media-content">
@@ -9,25 +9,21 @@
       <div class="content">
         <p>{{ project.description }}</p>
       </div>
-      <div class="image-carousel">
-        <carousel>
-          <slide v-for="image in project.images" v-bind:key="image.id">
-            <img src="image.get_image" alt="Project Image" />
-          </slide>
-        </carousel>
+      <hr />
+      <div class="container">
+        <ImageCarousel v-bind:images="project.images" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Carousel, Slide } from "vue-carousel";
+import ImageCarousel from "../components/ImageCarousel.vue";
 export default {
   name: "ProjectCard",
 
   components: {
-    Carousel,
-    Slide,
+    ImageCarousel,
   },
   props: {
     project: {
@@ -36,11 +32,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.image {
-  margin-top: -1.25rem;
-  margin-left: -1.25rem;
-  margin-right: -1.25rem;
-}
-</style>

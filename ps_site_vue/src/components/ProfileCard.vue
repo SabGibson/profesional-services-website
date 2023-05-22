@@ -3,12 +3,17 @@
     <div class="box">
       <div class="profile-main">
         <div class="columns is-multiline is-gapless">
-          <figure class="figure-container column is-12">
+          <figure class="figure-container column is-11">
             <img
               class="profile image is-rounded is-128x128"
               :src="profile.get_thumbnail"
             />
           </figure>
+          <div class="column is-1">
+            <span class="icon">
+              <i @click="openEditModal" class="far fa-edit"></i>
+            </span>
+          </div>
           <div class="container column is-one-third">
             <h3 class="is-size-4 has-text-weight-bold">
               {{ profile.full_name }}
@@ -32,6 +37,11 @@ export default {
   name: "ProfileCard",
   props: {
     profile: Object,
+  },
+  methods: {
+    openEditModal() {
+      console.log("profile edit clicked");
+    },
   },
 };
 </script>

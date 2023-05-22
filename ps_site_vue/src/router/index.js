@@ -99,7 +99,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (
     to.matched.some((record) => record.meta.requireLogin) &&
-    !store.state.isAuthrnticated
+    !store.state.isAuthenticated
   ) {
     next({ name: "log-in", query: { to: to.path } });
   } else {

@@ -4,7 +4,7 @@
     <div class="container">
       <div class="profile-main">
         <div class="columns is-multiline is-gapless">
-          <div class="container column is-one-third">
+          <div class="container column is-two-thirds">
             <h4 class="is-size-5">
               {{ education.institution_name }}
             </h4>
@@ -25,12 +25,22 @@
   </li>
 </template>
 
+<style>
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+</style>
+
 <script>
+import axios from "axios";
 export default {
   name: "EducationCard",
   props: {
     education: Object,
   },
+  methods: {},
 };
 </script>
 

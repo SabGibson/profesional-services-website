@@ -60,6 +60,12 @@
               >
                 Logout
               </button>
+              <router-link
+                v-if="$store.state.isAuthenticated"
+                to="/create-new-product"
+                class="button is-light"
+                >Create Product</router-link
+              >
               <router-link to="/log-in" class="button is-light" v-else
                 >Login</router-link
               >

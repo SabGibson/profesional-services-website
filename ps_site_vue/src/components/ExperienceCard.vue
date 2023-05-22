@@ -4,7 +4,7 @@
     <div class="container">
       <div class="profile-main">
         <div class="columns is-multiline is-gapless">
-          <div class="container column is-one-third">
+          <div class="container column is-two-thirds">
             <h4 class="is-size-5">
               {{ job.job_title }}
             </h4>
@@ -32,11 +32,13 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ExperienceCard",
   props: {
     job: Object,
   },
+  methods: {},
 };
 </script>
 

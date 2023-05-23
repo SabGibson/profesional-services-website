@@ -108,7 +108,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "EducatuionModal",
+  name: "EducationModal",
   props: {
     education: Object,
   },
@@ -117,29 +117,28 @@ export default {
   },
   methods: {
     async updateEducation(record) {
-      console.log(record);
-      // axios
-      //   .patch(
-      //     `/api/v1/profile-education/${this.record.id}/`,
-      //     this.updatedEducation
-      //   )
-      //   .then((res) => {
-      //     this.$emit("close");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      let updateForm = { ...record };
+      delete updateForm.id;
+
+      axios
+        .patch(`/api/v1/profile-education/${this.record.id}/`, updateForm)
+        .then((res) => {
+          this.$emit("close");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
+
     async deleteEducation(id) {
-      console.log(id);
-      // axios
-      //   .delete(`/api/v1/profile-education/${id}/`)
-      //   .then(() => {
-      //     this.$emit("deleted");
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
+      axios
+        .delete(`/api/v1/profile-education/${id}/`)
+        .then(() => {
+          this.$emit("deleted");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
 };

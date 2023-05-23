@@ -42,6 +42,7 @@
             v-if="showModal.education"
             v-bind:education="profile.education"
             @close="showModal.education = false"
+            @deleted="confirmEduDelete"
           />
         </ul>
         <ul class="column is-12 box">
@@ -58,6 +59,7 @@
             v-if="showModal.skills"
             v-bind:skills="profile.skills"
             @close="showModal.skills = false"
+            @deleted="confirmSklDelete"
           />
         </ul>
         <ul class="column is-12 box">
@@ -132,6 +134,7 @@ import ExperienceModal from "@/components/ExperienceModal.vue";
 import CertificationsModal from "@/components/CertificationsModal.vue";
 import SkillsModalVue from "@/components/SkillsModal.vue";
 import ProjectsModal from "@/components/ProjectsModal.vue";
+import { toast } from "bulma-toast";
 
 export default {
   name: "profile",
@@ -174,6 +177,28 @@ export default {
     },
   },
   methods: {
+    confirmSklDelete() {
+      this.showModal.skills = false;
+      toast({
+        message: `A skill entry was deleted.`,
+        type: "is-info",
+        dismissible: true,
+        pauseOnHover: true,
+        duration: 2000,
+        position: "bottom-right",
+      });
+    },
+    confirmEduDelete() {
+      this.showModal.education = false;
+      toast({
+        message: `An education entry was deleted.`,
+        type: "is-info",
+        dismissible: true,
+        pauseOnHover: true,
+        duration: 2000,
+        position: "bottom-right",
+      });
+    },
     editProjects() {
       console.log(this.profile.projects);
       this.showModal.projects = true;

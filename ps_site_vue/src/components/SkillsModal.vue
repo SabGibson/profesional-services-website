@@ -86,29 +86,27 @@ export default {
   },
   methods: {
     async updateSkilkls(record) {
-      console.log(record);
-      // axios
-      //   .patch(
-      //     `/api/v1/profile-education/${this.record.id}/`,
-      //     this.updatedEducation
-      //   )
-      //   .then((res) => {
-      //     this.$emit("close");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      let updateForm = { ...record };
+      delete updateForm.id;
+
+      axios
+        .patch(`/api/v1/profile-skill/${this.record.id}/`, updateForm)
+        .then((res) => {
+          this.$emit("close");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     async deleteSkills(id) {
-      console.log(id);
-      // axios
-      //   .delete(`/api/v1/profile-education/${id}/`)
-      //   .then(() => {
-      //     this.$emit("deleted");
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
+      axios
+        .delete(`/api/v1/profile-skill/${id}/`)
+        .then(() => {
+          this.$emit("deleted");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
 };

@@ -4,40 +4,18 @@
     <div class="modal-content box">
       <form @submit.prevent="updateEducation">
         <div
-          v-for="(record, idx) in education"
+          v-for="record in projects"
           v-bind:key="record.id"
           class="general-form"
         >
           <div class="field">
-            <label class="label">Institution Name</label>
+            <label class="label">Project Name</label>
             <div class="control">
               <input
                 class="input"
                 type="text"
-                :placeholder="`${record.institution_name}`"
-                v-model="record.institution_name"
-              />
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Level</label>
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                :placeholder="`${record.level}`"
-                v-model="record.level"
-              />
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Qualification Name</label>
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                :placeholder="`${record.qualification_name}`"
-                v-model="record.qualification_name"
+                :placeholder="`${record.project_name}`"
+                v-model="record.project_name"
               />
             </div>
           </div>
@@ -52,23 +30,31 @@
               />
             </div>
           </div>
-          <div class="field">
-            <label class="label">Date Achieved</label>
-            <div class="control">
-              <input
-                class="input"
-                type="date"
-                :placeholder="`${record.date_achieved}`"
-                v-model="record.date_achieved"
-              />
-            </div>
+          <div class="image-upload">
+            <input type="file" @change="uploadProjectImage($event, record)" />
           </div>
+          <hr />
+          <div
+            class="project-image"
+            v-for="image in record.images"
+            v-bind:key="image.id"
+          >
+            <img :src="image.image_url" alt="project image" />
+            <button
+              type="button"
+              class="button is-link is-danger"
+              @click="deleteImage(record.id, image.id)"
+            >
+              delete
+            </button>
+          </div>
+          <hr />
           <div class="field is-grouped">
             <div class="control">
               <button
                 type="submit"
                 class="button is-link"
-                @click="updateEducation(record)"
+                @click="updateProject(record)"
               >
                 Update
               </button>
@@ -77,7 +63,7 @@
               <button
                 type="button"
                 class="button is-link is-danger"
-                @click="deleteEducation(record.id)"
+                @click="deleteProject(record.id)"
               >
                 delete
               </button>
@@ -110,36 +96,59 @@ import axios from "axios";
 export default {
   name: "ProjectsModal",
   props: {
-    education: Object,
+    projects: Object,
   },
   data() {
     return {};
   },
   methods: {
     async updateProject(record) {
-      console.log(record);
-      // axios
-      //   .patch(
-      //     `/api/v1/profile-education/${this.record.id}/`,
-      //     this.updatedEducation
-      //   )
-      //   .then((res) => {
-      //     this.$emit("close");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      let updateForm = { ...record };
+      delete updateForm.id;
+      axios
+        .patch(`/api/v1/profile-project/${this.record.id}/`, updateForm)
+        .then((res) => {
+          this.$emit("close");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    async uploadProjectImage(event, record) {
+      const file = event.target.files[0];
+      let formData = new FormData();
+      formData.append("image", file);
+      formData.append("project", record.id);
+
+      axios
+        .post(`/api/v1/profile-project-image/`)
+        .then((res) => {
+          this.$emit("uploaded-image");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    async deleteImage(id) {
+      axios
+        .delete(`/api/v1/profile-project-image/${id}/`)
+        .then(() => {
+          this.$emit("deleted");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     async deleteProject(id) {
-      console.log(id);
-      // axios
-      //   .delete(`/api/v1/profile-education/${id}/`)
-      //   .then(() => {
-      //     this.$emit("deleted");
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
+      axios
+        .delete(`/api/v1/profile-project/${id}/`)
+        .then(() => {
+          this.$emit("deleted");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
 };

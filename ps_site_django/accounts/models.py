@@ -123,7 +123,7 @@ class ProfileProject(models.Model):
 
 class ProfileProjectImage(models.Model):
 
-    profile = models.ForeignKey(
+    project = models.ForeignKey(
         ProfileProject, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='projects/')
 

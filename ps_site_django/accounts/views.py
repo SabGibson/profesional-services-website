@@ -19,17 +19,41 @@ class ProfileEducationViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileEducationSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+    def perform_destroy(self, instance):
+        if instance.profile != self.request.user.profile:
+            raise PermissionDenied("You can not delete this object")
+        super().perform_destroy(instance)
+
 
 class ProfileEmploymentViewSet(viewsets.ModelViewSet):
     queryset = ProfileEmployment.objects.all()
     serializer_class = ProfileEmploymentSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+    def perform_destroy(self, instance):
+        if instance.profile != self.request.user.profile:
+            raise PermissionDenied("You can not delete this object")
+        super().perform_destroy(instance)
+
 
 class ProfileProjectViewSet(viewsets.ModelViewSet):
     queryset = ProfileProject.objects.all()
     serializer_class = ProfileProjectSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+    def perform_destroy(self, instance):
+        if instance.profile != self.request.user.profile:
+            raise PermissionDenied("You can not delete this object")
+        super().perform_destroy(instance)
 
 
 class ProfileProjectImageViewSet(viewsets.ModelViewSet):
@@ -43,8 +67,24 @@ class ProfileCertificationViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileCertificationSerialier
     permission_classes = [IsOwnerOrReadOnly]
 
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+    def perform_destroy(self, instance):
+        if instance.profile != self.request.user.profile:
+            raise PermissionDenied("You can not delete this object")
+        super().perform_destroy(instance)
+
 
 class ProfileSkillViewSet(viewsets.ModelViewSet):
     queryset = ProfileSkill.objects.all()
     serializer_class = ProfileSkillSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+    def perform_destroy(self, instance):
+        if instance.profile != self.request.user.profile:
+            raise PermissionDenied("You can not delete this object")
+        super().perform_destroy(instance)

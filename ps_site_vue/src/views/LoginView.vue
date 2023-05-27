@@ -63,12 +63,14 @@ export default {
 
       await axios
         .post("/api/v1/token/login/", formData)
-        .then((res) => {
+        .then(async (res) => {
           const token = res.data.auth_token;
           this.$store.commit("setToken", token);
-          this.$store.dispatch("fetchUser");
-          axios.defaults.headers.common["Authorization"] = "Toekn" + token;
+          axios.defaults.headers.common["Authorization"] = "Token " + token;
           localStorage.setItem("token", token);
+
+          const userRes = await axios.get("/api/v1/users/me/");
+          this.$store.commit("setUser", userRes.data);
           const toPath = this.$route.query.to || "/basket";
           this.$router.push(toPath);
         })

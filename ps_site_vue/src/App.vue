@@ -52,8 +52,9 @@
             v-if="$store.state.isAuthenticated"
             :to="`/profiles/${$store.state.user.profile.id}`"
             class="navbar-item"
-            >Profile</router-link
           >
+            Profile
+          </router-link>
 
           <div class="navbar-item">
             <div class="buttons">
@@ -119,7 +120,7 @@ export default {
     const token = this.$store.state.token;
 
     if (token) {
-      axios.defaults.headers.common["Authorization"] = "Token" + token;
+      axios.defaults.headers.common["Authorization"] = "Token " + token;
     } else {
       axios.defaults.headers.common["Authorization"] = "";
     }

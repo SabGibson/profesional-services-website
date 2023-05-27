@@ -62,11 +62,6 @@ export default createStore({
       state.user = user;
     },
   },
-  actions: {
-    async fetchUser({ commit, state }) {
-      const response = await axios.get("/api/v1/users/me/");
-      commit("setUser", response.data);
-    },
-  },
+  actions: {},
   modules: {},
 });

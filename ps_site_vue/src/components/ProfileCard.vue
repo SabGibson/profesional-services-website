@@ -13,7 +13,10 @@
           <div class="column is-1">
             <span class="icon">
               <i
-                v-if="$store.state.user && $store.state.user.id === profile.id"
+                v-if="
+                  $store.state.user &&
+                  $store.state.user.profile.id === profile.id
+                "
                 @click="openEditModal"
                 class="far fa-edit"
               ></i>

@@ -15,7 +15,9 @@
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Experience</h4>
             <i
-              v-if="$store.state.user && $store.state.user.id === profile.id"
+              v-if="
+                $store.state.user && $store.state.user.profile.id === profile.id
+              "
               @click="editExperience"
               class="column is-1 far fa-edit"
             ></i>
@@ -36,7 +38,9 @@
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Education</h4>
             <i
-              v-if="$store.state.user && $store.state.user.id === profile.id"
+              v-if="
+                $store.state.user && $store.state.user.profile.id === profile.id
+              "
               @click="editEducation"
               class="column is-1 far fa-edit"
             ></i>
@@ -57,7 +61,9 @@
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Skills</h4>
             <i
-              v-if="$store.state.user && $store.state.user.id === profile.id"
+              v-if="
+                $store.state.user && $store.state.user.profile.id === profile.id
+              "
               @click="editSkills"
               class="column is-1 far fa-edit"
             ></i>
@@ -80,7 +86,9 @@
               Certifications & Licences
             </h4>
             <i
-              v-if="$store.state.user && $store.state.user.id === profile.id"
+              v-if="
+                $store.state.user && $store.state.user.profile.id === profile.id
+              "
               @click="editCertification"
               class="column is-1 far fa-edit"
             ></i>
@@ -104,7 +112,9 @@
               Projects by {{ profile.first_name }}
             </h4>
             <i
-              v-if="$store.state.user && $store.state.user.id === profile.id"
+              v-if="
+                $store.state.user && $store.state.user.profile.id === profile.id
+              "
               @click="editProjects"
               class="column is-1 far fa-edit"
             ></i>

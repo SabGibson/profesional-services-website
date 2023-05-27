@@ -15,11 +15,15 @@ class ProductSerializer(serializers.ModelSerializer):
     creator = serializers.ReadOnlyField(source='creator.username')
     category = 'CategorySerializer()'
     images = ProductImageSerializer(many=True, required=False)
+    profile = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'creator', 'slug', 'description',
+        fields = ('id', 'name', 'creator', 'profile', 'slug', 'description',
                   'price', 'category', 'image', 'get_abs_url', 'get_image', 'get_thumbnail', 'images')
+
+    def get_profile(self, obj):
+        return obj.creator.profile.id
 
 
 class CategorySerializer(serializers.ModelSerializer):

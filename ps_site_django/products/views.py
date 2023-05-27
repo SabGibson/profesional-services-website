@@ -1,16 +1,17 @@
-from django.shortcuts import render
-from rest_framework.generics import CreateAPIView
+
+from rest_framework.generics import ListAPIView
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Product, Category
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from .serializers import ProductSerializer, CategorySerializer
 from rest_framework.decorators import api_view
 from rest_framework import viewsets, mixins
-from rest_framework import status
 from .permissions import IsCreatorOrReadOnly
 from django.db.models import Q
+from django.utils.text import slugify
+from django.utils.crypto import get_random_string
 
 
 class LatestProductsLists(APIView):
@@ -53,7 +54,14 @@ class ProductViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
     permission_classes = [IsAuthenticated, IsCreatorOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        name = serializer.validated_data.get('name')
+        slug = slugify(name)
+        unique_slug = slug
+        num = 1
+        while Product.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        serializer.save(creator=self.request.user, slug=unique_slug)
 
 
 @api_view(['POST'])
@@ -67,3 +75,13 @@ def search(request):
         return Response(serializer.data)
     else:
         return Response({"products": []})
+
+
+class CategoryListView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class ProductListView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

@@ -11,6 +11,8 @@ import Checkout from "../views/CheckoutView.vue";
 import Success from "../views/SuccessView.vue";
 import store from "../store";
 import Profile from "../views/ProfileView.vue";
+import CreateProduct from "../views/CreateProductView.vue";
+import ProductStore from "../views/ProductStoreView.vue";
 const routes = [
   {
     path: "/",
@@ -49,17 +51,17 @@ const routes = [
     path: "/basket/checkout",
     name: "checkout",
     component: Checkout,
-    // meta: {
-    //   requireLogin: true,
-    // },
+    meta: {
+      requireLogin: true,
+    },
   },
   {
     path: "/basket/success",
     name: "success",
     component: Success,
-    // meta: {
-    //   requireLogin: true,
-    // },
+    meta: {
+      requireLogin: true,
+    },
   },
   {
     path: "/about",
@@ -82,12 +84,27 @@ const routes = [
   },
 
   {
+    path: "/store/",
+    name: "product-store",
+    component: ProductStore,
+  },
+
+  {
     path: "/profiles/:profile_id",
     name: "profile",
     component: Profile,
-    // meta: {
-    //   requireLogin: true,
-    // },
+    meta: {
+      requireLogin: true,
+    },
+  },
+
+  {
+    path: "/create/new-product",
+    name: "newproduct",
+    component: CreateProduct,
+    meta: {
+      requireLogin: true,
+    },
   },
 ];
 

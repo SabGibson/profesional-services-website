@@ -46,9 +46,14 @@
           </div>
         </div>
         <div class="navbar-end">
+          <router-link to="/" class="navbar-item">Home</router-link>
           <router-link to="/store" class="navbar-item">Store</router-link>
-          <router-link to="/gallery" class="navbar-item">Gallery</router-link>
-          <router-link to="/profile" class="navbar-item">Profile</router-link>
+          <router-link
+            v-if="$store.state.isAuthenticated"
+            :to="`/profiles/${$store.state.user.profile.id}`"
+            class="navbar-item"
+            >Profile</router-link
+          >
 
           <div class="navbar-item">
             <div class="buttons">
@@ -62,7 +67,7 @@
               </button>
               <router-link
                 v-if="$store.state.isAuthenticated"
-                to="/create-new-product"
+                to="/create/new-product"
                 class="button is-light"
                 >Create Product</router-link
               >

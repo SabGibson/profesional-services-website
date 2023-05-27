@@ -66,9 +66,9 @@ export default {
         .then((res) => {
           const token = res.data.auth_token;
           this.$store.commit("setToken", token);
+          this.$store.dispatch("fetchUser");
           axios.defaults.headers.common["Authorization"] = "Toekn" + token;
           localStorage.setItem("token", token);
-
           const toPath = this.$route.query.to || "/basket";
           this.$router.push(toPath);
         })

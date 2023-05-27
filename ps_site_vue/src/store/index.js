@@ -8,6 +8,7 @@ export default createStore({
     isAuthenticated: false,
     token: "",
     loading: false,
+    user: null,
   },
   getters: {},
   mutations: {
@@ -49,13 +50,23 @@ export default createStore({
     removeToken(state, token) {
       state.token = "";
       state.isAuthenticated = false;
+      state.user = null;
     },
     clearBasket(state) {
       state.basket.items = [];
 
       localStorage.setItem("basket", JSON.stringify(state.basket));
     },
+
+    setUser(state, user) {
+      state.user = user;
+    },
   },
-  actions: {},
+  actions: {
+    async fetchUser({ commit, state }) {
+      const response = await axios.get("/api/v1/me/");
+      commit("setUser", response.data);
+    },
+  },
   modules: {},
 });

@@ -15,9 +15,7 @@
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Experience</h4>
             <i
-              v-if="
-                $store.state.user && $store.state.user.profile.id === profile.id
-              "
+              v-if="$store.state.profile == profile.id"
               @click="editExperience"
               class="column is-1 far fa-edit"
             ></i>
@@ -38,9 +36,7 @@
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Education</h4>
             <i
-              v-if="
-                $store.state.user && $store.state.user.profile.id === profile.id
-              "
+              v-if="$store.state.profile == profile.id"
               @click="editEducation"
               class="column is-1 far fa-edit"
             ></i>
@@ -61,9 +57,7 @@
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Skills</h4>
             <i
-              v-if="
-                $store.state.user && $store.state.user.profile.id === profile.id
-              "
+              v-if="$store.state.profile == profile.id"
               @click="editSkills"
               class="column is-1 far fa-edit"
             ></i>
@@ -86,9 +80,7 @@
               Certifications & Licences
             </h4>
             <i
-              v-if="
-                $store.state.user && $store.state.user.profile.id === profile.id
-              "
+              v-if="$store.state.profile == profile.id"
               @click="editCertification"
               class="column is-1 far fa-edit"
             ></i>
@@ -112,9 +104,7 @@
               Projects by {{ profile.first_name }}
             </h4>
             <i
-              v-if="
-                $store.state.user && $store.state.user.profile.id === profile.id
-              "
+              v-if="$store.state.profile == profile.id"
               @click="editProjects"
               class="column is-1 far fa-edit"
             ></i>
@@ -230,22 +220,18 @@ export default {
       });
     },
     editProjects() {
-      console.log(this.profile);
       this.showModal.projects = true;
     },
     editCertification() {
-      console.log(this.profile.certifications);
       this.showModal.certifications = true;
     },
     editSkills() {
-      console.log(this.profile.skills);
       this.showModal.skills = true;
     },
     editEducation() {
       this.showModal.education = true;
     },
     editExperience() {
-      console.log(this.profile.employment);
       this.showModal.experience = true;
     },
 
@@ -273,11 +259,11 @@ export default {
         });
       this.$store.commit("isLoading", false);
     },
+
     async getProfile() {
-      this.$store.commit("setIsLoading", true);
-      const profile_id = this.$route.params.profile_id;
+      this.isLoadingProfile = true;
       await axios
-        .get(`/api/v1/profiles/${profile_id}/`)
+        .get(`/api/v1/profiles/${this.$route.params.profile_id}/`)
         .then((res) => {
           this.profile = res.data;
           document.title = this.profile.username + " | Grünluft";
@@ -285,7 +271,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.$store.commit("setIsLoading", false);
+      this.isLoadingProfile = false;
     },
   },
 };
@@ -301,4 +287,3 @@ export default {
   margin-left: 1rem;
 }
 </style>
-products/search/

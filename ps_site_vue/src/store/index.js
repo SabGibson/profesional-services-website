@@ -8,7 +8,7 @@ export default createStore({
     isAuthenticated: false,
     token: "",
     loading: false,
-    user: null,
+    profile: null,
   },
   getters: {},
   mutations: {
@@ -25,6 +25,17 @@ export default createStore({
       } else {
         state.token = "";
         state.isAuthenticated = false;
+      }
+
+      if (localStorage.getItem("user_id")) {
+        state.user = localStorage.getItem("user_id");
+      } else {
+        state.user = null;
+      }
+      if (localStorage.getItem("profile_id")) {
+        state.profile = localStorage.getItem("profile_id");
+      } else {
+        state.profile = null;
       }
     },
     addToBasket(state, item) {
@@ -51,6 +62,7 @@ export default createStore({
       state.token = "";
       state.isAuthenticated = false;
       state.user = null;
+      state.profile = null;
     },
     clearBasket(state) {
       state.basket.items = [];
@@ -59,7 +71,8 @@ export default createStore({
     },
 
     setUser(state, user) {
-      state.user = user;
+      state.profile = user.profile.id;
+      state.user = user.id;
     },
   },
   actions: {},

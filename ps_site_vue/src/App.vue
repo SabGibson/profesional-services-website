@@ -48,19 +48,20 @@
         <div class="navbar-end">
           <router-link to="/" class="navbar-item">Home</router-link>
           <router-link to="/store" class="navbar-item">Store</router-link>
-          <router-link
-            v-if="$store.state.isAuthenticated"
-            :to="`/profiles/${$store.state.user.profile.id}`"
-            class="navbar-item"
-          >
-            Profile
-          </router-link>
 
           <div class="navbar-item">
             <div class="buttons">
               <button
                 to="/"
-                class="button is-light"
+                class="button is-dark"
+                v-if="$store.state.isAuthenticated"
+                @click="toProfile"
+              >
+                My Profile
+              </button>
+              <button
+                to="/"
+                class="button is-dark"
                 v-if="$store.state.isAuthenticated"
                 @click="logout"
               >
@@ -118,7 +119,7 @@ export default {
   beforeCreate() {
     this.$store.commit("initStore");
     const token = this.$store.state.token;
-
+    console.log(this.$store.state);
     if (token) {
       axios.defaults.headers.common["Authorization"] = "Token " + token;
     } else {
@@ -134,10 +135,13 @@ export default {
 
       localStorage.removeItem("token");
       localStorage.removeItem("username");
-      localStorage.removeItem("userid");
-
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("profile_id");
       this.$store.commit("removeToken");
       this.$router.push("/");
+    },
+    toProfile() {
+      this.$router.push(`/profiles/${this.$store.state.profile}`);
     },
   },
 

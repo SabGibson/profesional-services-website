@@ -70,7 +70,6 @@ export default {
         .get("api/v1/products/list/")
         .then((res) => {
           this.products = res.data;
-          console.log(this.products);
         })
         .catch((err) => {
           console.error(err);

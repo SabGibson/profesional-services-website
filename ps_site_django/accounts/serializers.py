@@ -46,11 +46,11 @@ class ProfileEducationSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    projects = ProfileProjectSerializer(many=True)
-    certifications = ProfileCertificationSerialier(many=True)
-    employment = ProfileEmploymentSerializer(many=True)
-    education = ProfileEducationSerializer(many=True)
-    skills = ProfileSkillSerializer(many=True)
+    projects = ProfileProjectSerializer(many=True, required=False)
+    certifications = ProfileCertificationSerialier(many=True, required=False)
+    employment = ProfileEmploymentSerializer(many=True, required=False)
+    education = ProfileEducationSerializer(many=True, required=False)
+    skills = ProfileSkillSerializer(many=True, required=False)
 
     class Meta:
         model = Profile

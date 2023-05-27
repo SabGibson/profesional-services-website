@@ -200,7 +200,7 @@ export default {
       });
     },
     editProjects() {
-      console.log(this.profile.projects);
+      console.log(this.profile);
       this.showModal.projects = true;
     },
     editCertification() {

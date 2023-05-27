@@ -12,30 +12,29 @@ class ProfileProjectImageSerializer(serializers.Serializer):
 
 
 class ProfileProjectSerializer(serializers.ModelSerializer):
-    images = ProfileProjectImageSerializer(many=True)
+    images = ProfileProjectImageSerializer(many=True, required=False)
 
     class Meta:
         model = ProfileProject
-        fields = ('id', 'profile', 'project_name', 'description', 'images')
+        fields = ('id', 'project_name', 'description', 'images')
 
 
 class ProfileSkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileSkill
-        fields = ('id', 'profile', 'skill_name', 'description')
+        fields = ('id', 'skill_name', 'description')
 
 
 class ProfileCertificationSerialier(serializers.ModelSerializer):
     class Meta:
         model = ProfileCertification
-        fields = ('id', 'profile', 'certification_name',
-                  'description', 'date_achieved')
+        fields = ('id', 'certification_name', 'description', 'date_achieved')
 
 
 class ProfileEmploymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileEmployment
-        fields = ('id', 'profile', 'level', 'company_name', 'job_title', 'description',
+        fields = ('id', 'level', 'company_name', 'job_title', 'description',
                   'date_started', 'date_ended', 'is_present')
 
 

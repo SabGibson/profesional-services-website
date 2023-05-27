@@ -2,6 +2,61 @@
   <div class="modal is-active">
     <div class="modal-background"></div>
     <div class="modal-content box">
+      <div class="control">
+        <button
+          type="button"
+          class="button is-link is-success"
+          @click="newProjectRecord"
+        >
+          New Record
+        </button>
+        <h2>Edit Projects</h2>
+        <div class="new-record-form" v-if="showModal">
+          <form @submit.prevent="createNewRecord">
+            <div class="field">
+              <label class="label">Skill</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  v-model="this.newRecord.skill_name"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Description</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  v-model="this.newRecord.description"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Images</label>
+              <div class="control">
+                <input type="file" @change="onFileChange" multiple />
+              </div>
+            </div>
+            <div class="field is-grouped">
+              <div class="control">
+                <button type="submit" class="button is-link">Save</button>
+              </div>
+              <div class="control">
+                <button
+                  type="button"
+                  class="button is-link is-light"
+                  @click="showModal = false"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+          <hr />
+        </div>
+      </div>
       <form @submit.prevent="updateEducation">
         <div
           v-for="record in projects"
@@ -99,9 +154,51 @@ export default {
     projects: Object,
   },
   data() {
-    return {};
+    return {
+      showModal: false,
+      newRecord: {
+        project_name: "",
+        description: "",
+      },
+    };
   },
   methods: {
+    newProjectRecord() {
+      this.showModal = true;
+      this.newRecord = {
+        project_name: "",
+        description: "",
+        images: "",
+      };
+    },
+    onFileChange(event) {
+      this.newRecord.images = event.target.files;
+    },
+    async createNewRecord() {
+      let formData = new FormData();
+      formData.append("project_name", this.newRecord.project_name);
+      formData.append("description", this.newRecord.description);
+      Array.from(this.newRecord.images).forEach((image, index) => {
+        formData.append("image" + index, image);
+      });
+
+      axios
+        .post("/api/v1/profile-project/", formData, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          this.newRecord = {
+            project_name: "",
+            description: "",
+            images: "",
+          };
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     async updateProject(record) {
       let updateForm = { ...record };
       delete updateForm.id;
@@ -122,7 +219,7 @@ export default {
       formData.append("project", record.id);
 
       axios
-        .post(`/api/v1/profile-project-image/`)
+        .post(`/api/v1/profile-project-image/`, formData)
         .then((res) => {
           this.$emit("uploaded-image");
         })

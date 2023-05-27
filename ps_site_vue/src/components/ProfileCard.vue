@@ -7,6 +7,7 @@
             <img
               class="profile image is-rounded is-128x128"
               :src="profile.get_thumbnail"
+              alt="profile image"
             />
           </figure>
           <div class="column is-1">
@@ -29,20 +30,35 @@
         <p class="is-size-6">{{ profile.bio }}</p>
       </div>
     </div>
+    <ProfileEditModal
+      v-bind:profile="profile"
+      @close="showModal = false"
+      v-if="showModal"
+    />
   </div>
 </template>
 
 <script>
+import ProfileEditModal from "./ProfileEditModal.vue";
 export default {
   name: "ProfileCard",
   props: {
     profile: Object,
   },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
+  component: {
+    ProfileEditModal,
+  },
   methods: {
     openEditModal() {
-      console.log("profile edit clicked");
+      this.showModal = true;
     },
   },
+  components: { ProfileEditModal },
 };
 </script>
 

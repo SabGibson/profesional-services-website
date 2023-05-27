@@ -39,7 +39,7 @@ class TestUserCreate:
 
 @pytest.mark.django_db
 class TestUserEndpopints:
-    def test_if_education_record_created_from_endpoint_return_201(self):
+    def test_if_education_record_created_from_authed_user_by_endpoint_return_201(self):
         api_client = APIClient()
 
         user = baker.make(User)
@@ -55,4 +55,74 @@ class TestUserEndpopints:
 
         response = api_client.post(
             '/api/v1/profile-education/', data=record_data)
+        assert response.status_code == status.HTTP_201_CREATED
+
+    def test_if_employment_record_created_from_authed_user_by_endpoint_return_201(self):
+        api_client = APIClient()
+
+        user = baker.make(User)
+        api_client.force_authenticate(user=user)
+
+        record_data = {
+            "company_name": "Microsoft",
+            "date_started": "2023-05-01",
+            "description": "Software Engineer",
+            "is_present": True,
+            "job_title": "Software Engineer II",
+            "level": "Associate",
+        }
+
+        response = api_client.post(
+            '/api/v1/profile-employment/', data=record_data)
+        print(response.data)  # For debugging
+        assert response.status_code == status.HTTP_201_CREATED
+
+    def test_if_certification_record_created_from_authed_user_by_endpoint_return_201(self):
+        api_client = APIClient()
+
+        user = baker.make(User)
+        api_client.force_authenticate(user=user)
+
+        record_data = {
+            "certification_name": "AWS Solutions Architect",
+            "date_achieved": "2023-05-01",
+            "description": "AWS Solutions Architect  certification",
+        }
+
+        response = api_client.post(
+            '/api/v1/profile-certification/', data=record_data)
+        print(response.data)  # For debugging
+        assert response.status_code == status.HTTP_201_CREATED
+
+    def test_if_skill_record_created_from_authed_user_by_endpoint_return_201(self):
+        api_client = APIClient()
+
+        user = baker.make(User)
+        api_client.force_authenticate(user=user)
+
+        record_data = {
+            "skill_name": "Python",
+            "description": "Advanced python programming",
+        }
+
+        response = api_client.post(
+            '/api/v1/profile-skill/', data=record_data)
+        print(response.data)  # For debugging
+        assert response.status_code == status.HTTP_201_CREATED
+
+    def test_if_project_record_created_from_authed_user_by_endpoint_return_201(self):
+        api_client = APIClient()
+
+        user = baker.make(User)
+        api_client.force_authenticate(user=user)
+
+        record_data = {
+            "project_name": "Python",
+            "description": "Advanced python programming",
+            "images": []
+        }
+
+        response = api_client.post(
+            '/api/v1/profile-project/', data=record_data)
+        print(response.data)  # For debugging
         assert response.status_code == status.HTTP_201_CREATED

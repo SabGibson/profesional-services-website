@@ -2,6 +2,55 @@
   <div class="modal is-active">
     <div class="modal-background"></div>
     <div class="modal-content box">
+      <div class="control">
+        <button
+          type="button"
+          class="button is-link is-success"
+          @click="newSkillRecord"
+        >
+          New Record
+        </button>
+        <h1>Edit Skills</h1>
+        <div class="new-record-form" v-if="showModal">
+          <form @submit.prevent="createNewRecord">
+            <div class="field">
+              <label class="label">Skill</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  v-model="this.newRecord.skill_name"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Description</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  v-model="this.newRecord.description"
+                />
+              </div>
+            </div>
+            <div class="field is-grouped">
+              <div class="control">
+                <button type="submit" class="button is-link">Save</button>
+              </div>
+              <div class="control">
+                <button
+                  type="button"
+                  class="button is-link is-light"
+                  @click="showModal = false"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+          <hr />
+        </div>
+      </div>
       <form @submit.prevent="updateEducation">
         <div
           v-for="record in skills"
@@ -82,9 +131,39 @@ export default {
     skills: Object,
   },
   data() {
-    return {};
+    return {
+      showModal: false,
+      newRecord: {
+        skill_name: "",
+        description: "",
+      },
+    };
   },
   methods: {
+    newSkillRecord() {
+      this.showModal = true;
+      this.newRecord = {
+        skill_name: "",
+        description: "",
+      };
+    },
+
+    async createNewRecord() {
+      let form = this.newRecord;
+
+      axios
+        .post("/api/v1/profile-skill/", form)
+        .then((res) => {
+          this.newRecord = {
+            certification_name: "",
+            date_achieved: "",
+            description: "",
+          };
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     async updateSkilkls(record) {
       let updateForm = { ...record };
       delete updateForm.id;

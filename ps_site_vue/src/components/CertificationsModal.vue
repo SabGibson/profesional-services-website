@@ -2,6 +2,65 @@
   <div class="modal is-active">
     <div class="modal-background"></div>
     <div class="modal-content box">
+      <div class="control">
+        <button
+          type="button"
+          class="button is-link is-success"
+          @click="newCertificationRecord"
+        >
+          New Record
+        </button>
+        <h1>Edit Certification</h1>
+        <div class="new-record-form" v-if="showModal">
+          <form @submit.prevent="createNewRecord">
+            <div class="field">
+              <label class="label">Certification Name</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  v-model="this.newRecord.certification_name"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Description</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  v-model="this.newRecord.description"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Date Achieved</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="date"
+                  v-model="this.newRecord.date_achieved"
+                />
+              </div>
+            </div>
+            <div class="field is-grouped">
+              <div class="control">
+                <button type="submit" class="button is-link">Save</button>
+              </div>
+              <div class="control">
+                <button
+                  type="button"
+                  class="button is-link is-light"
+                  @click="showModal = false"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+          <hr />
+        </div>
+      </div>
       <form @submit.prevent="updateEducation">
         <div
           v-for="record in certifications"
@@ -93,9 +152,41 @@ export default {
     certifications: Object,
   },
   data() {
-    return {};
+    return {
+      showModal: false,
+      newRecord: {
+        certification_name: "",
+        date_achieved: "",
+        description: "",
+      },
+    };
   },
   methods: {
+    newCertificationRecord() {
+      this.showModal = true;
+      this.newRecord = {
+        certification_name: "",
+        date_achieved: "",
+        description: "",
+      };
+    },
+
+    async createNewRecord() {
+      let form = this.newRecord;
+
+      axios
+        .post("/api/v1/profile-certification/", form)
+        .then((res) => {
+          this.newRecord = {
+            certification_name: "",
+            date_achieved: "",
+            description: "",
+          };
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     async updateCertification(record) {
       let updateForm = { ...record };
       delete updateForm.id;

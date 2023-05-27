@@ -10,6 +10,7 @@
         >
           New Record
         </button>
+        <h1>Edit Education</h1>
         <div class="new-record-form" v-if="showModal">
           <form @submit.prevent="createNewRecord">
             <div class="field">
@@ -77,6 +78,7 @@
               </div>
             </div>
           </form>
+          <hr />
         </div>
       </div>
       <form @submit.prevent="updateEducation">
@@ -219,7 +221,6 @@ export default {
       axios
         .post("/api/v1/profile-education/", form)
         .then((res) => {
-          this.education.push(res.data);
           this.newRecord = {
             institution_name: "",
             level: "",

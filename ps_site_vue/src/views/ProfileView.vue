@@ -14,7 +14,11 @@
         <ul class="column is-12 box">
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Experience</h4>
-            <i @click="editExperience" class="column is-1 far fa-edit"></i>
+            <i
+              v-if="$store.state.user && $store.state.user.id === profile.id"
+              @click="editExperience"
+              class="column is-1 far fa-edit"
+            ></i>
           </div>
 
           <ExperienceCard
@@ -31,7 +35,11 @@
         <ul class="column is-12 box">
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Education</h4>
-            <i @click="editEducation" class="column is-1 far fa-edit"></i>
+            <i
+              v-if="$store.state.user && $store.state.user.id === profile.id"
+              @click="editEducation"
+              class="column is-1 far fa-edit"
+            ></i>
           </div>
           <EducationCard
             v-for="education in profile.education"
@@ -48,7 +56,11 @@
         <ul class="column is-12 box">
           <div class="columns is-multiline">
             <h4 class="title has-size-4 column is-10">Skills</h4>
-            <i @click="editSkills" class="column is-1 far fa-edit"></i>
+            <i
+              v-if="$store.state.user && $store.state.user.id === profile.id"
+              @click="editSkills"
+              class="column is-1 far fa-edit"
+            ></i>
           </div>
           <SkillsCard
             v-for="skill in profile.skills"
@@ -67,7 +79,11 @@
             <h4 class="title has-size-4 column is-10">
               Certifications & Licences
             </h4>
-            <i @click="editCertification" class="column is-1 far fa-edit"></i>
+            <i
+              v-if="$store.state.user && $store.state.user.id === profile.id"
+              @click="editCertification"
+              class="column is-1 far fa-edit"
+            ></i>
           </div>
           <CertificationCard
             v-for="cert in profile.certifications"
@@ -87,7 +103,11 @@
             <h4 class="title has-size-4 column is-10">
               Projects by {{ profile.first_name }}
             </h4>
-            <i @click="editProjects" class="column is-1 far fa-edit"></i>
+            <i
+              v-if="$store.state.user && $store.state.user.id === profile.id"
+              @click="editProjects"
+              class="column is-1 far fa-edit"
+            ></i>
           </div>
           <hr />
           <ProjectCard

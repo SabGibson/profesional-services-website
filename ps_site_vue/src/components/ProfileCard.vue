@@ -12,7 +12,11 @@
           </figure>
           <div class="column is-1">
             <span class="icon">
-              <i @click="openEditModal" class="far fa-edit"></i>
+              <i
+                v-if="$store.state.user && $store.state.user.id === profile.id"
+                @click="openEditModal"
+                class="far fa-edit"
+              ></i>
             </span>
           </div>
           <div class="container column is-one-third">

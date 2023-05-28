@@ -13,6 +13,12 @@ stripe = "*"
 python-dotenv = "*"
 pytest-django = "*"
 model-bakery = "*"
+gunicorn = "*"
+dj-database-url = "*"
+psycopg2 = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
+python-decouple = "*"
 
 [dev-packages]
 pytest = "*"

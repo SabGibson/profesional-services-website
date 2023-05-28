@@ -22,6 +22,8 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'creator', 'profile', 'slug', 'description',
                   'price', 'category', 'image', 'get_abs_url', 'get_image', 'get_thumbnail', 'images')
 
+        read_only_fields = ('slug',)
+
     def get_profile(self, obj):
         return obj.creator.profile.id
 

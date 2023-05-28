@@ -25,6 +25,7 @@
             class="input"
             type="number"
             id="price"
+            step="0.01"
             v-model="product.price"
           />
         </div>
@@ -102,7 +103,7 @@ export default {
       formData.append("image", this.product.image);
 
       axios
-        .post("/api/product-admin/", formData, {
+        .post("/api/v1/product-admin/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

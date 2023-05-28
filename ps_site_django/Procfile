@@ -1,1 +1,0 @@
-web: gunicorn ps_site_django.wsgi

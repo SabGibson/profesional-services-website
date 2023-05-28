@@ -6,7 +6,7 @@
           <figure class="figure-container column is-11">
             <img
               class="profile image is-rounded is-128x128"
-              :src="profile.get_thumbnail"
+              :src="profile.image_url"
               alt="profile image"
             />
           </figure>
@@ -60,6 +60,7 @@ export default {
   methods: {
     openEditModal() {
       this.showModal = true;
+      console.log(this.profile);
     },
   },
   components: { ProfileEditModal },

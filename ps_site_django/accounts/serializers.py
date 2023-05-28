@@ -46,6 +46,9 @@ class ProfileEducationSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    image_url = serializers.CharField(source='get_image', read_only=True)
+    thumbnail_url = serializers.CharField(
+        source='get_thumbnail', read_only=True)
     projects = ProfileProjectSerializer(many=True, required=False)
     certifications = ProfileCertificationSerialier(many=True, required=False)
     employment = ProfileEmploymentSerializer(many=True, required=False)
@@ -54,5 +57,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'get_image', 'get_thumbnail', 'first_name', 'last_name', 'full_name', 'username', 'bio', 'education', 'employment',
+        fields = ('id', 'image', 'thumbnail', 'image_url', 'thumbnail_url', 'first_name', 'last_name', 'full_name', 'username', 'bio', 'education', 'employment',
                   'certifications', 'skills', 'projects',)

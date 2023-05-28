@@ -13,6 +13,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     # permission_classes = [IsOwnerOrReadOnly]
 
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        instance = self.get_object()
+        instance.make_thumbnail(instance.image)
+        instance.save()
+        return response
+
 
 class ProfileEducationViewSet(viewsets.ModelViewSet):
     queryset = ProfileEducation.objects.all()

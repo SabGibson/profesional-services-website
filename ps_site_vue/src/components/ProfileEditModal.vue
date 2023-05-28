@@ -79,7 +79,7 @@ export default {
         .patch(`/api/v1/users/me/`, formData)
         .then((res) => {
           this.closeModal();
-          location.reload();
+          this.originalProfile = { ...this.profile };
         })
         .catch((error) => {
           console.log(error);
@@ -104,7 +104,9 @@ export default {
           },
         })
         .then((res) => {
+          console.log(res);
           this.closeModal();
+          location.reload();
         })
         .catch((error) => {
           console.log(error);

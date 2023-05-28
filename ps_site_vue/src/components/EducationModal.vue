@@ -228,6 +228,8 @@ export default {
             description: "",
             date_achieved: "",
           };
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);
@@ -236,10 +238,11 @@ export default {
     async updateEducation(record) {
       let updateForm = { ...record };
       delete updateForm.id;
-
+      console.log("clicked");
       axios
-        .patch(`/api/v1/profile-education/${this.record.id}/`, updateForm)
+        .patch(`/api/v1/profile-education/${record.id}/`, updateForm)
         .then((res) => {
+          location.reload();
           this.$emit("close");
         })
         .catch((err) => {
@@ -252,6 +255,8 @@ export default {
         .delete(`/api/v1/profile-education/${id}/`)
         .then(() => {
           this.$emit("deleted");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);

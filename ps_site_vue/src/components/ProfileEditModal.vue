@@ -7,21 +7,21 @@
         <div class="field">
           <label class="label">First Name</label>
           <input class="input" v-model="profile.first_name" type="text" />
-          <button class="button is-link">Save Changes</button>
+          <button class="button is-link is-success">Save Changes</button>
         </div>
       </form>
       <form @submit.prevent="updateUser('last_name')">
         <div class="field">
           <label class="label">Last Name</label>
           <input class="input" v-model="profile.last_name" type="text" />
-          <button class="button is-link">Save Changes</button>
+          <button class="button is-link is-success">Save Changes</button>
         </div>
       </form>
       <form @submit.prevent="updateProfile('bio')">
         <div class="field">
           <label class="label">Bio</label>
           <textarea class="textarea" v-model="profile.bio"></textarea>
-          <button class="button is-link">Save Changes</button>
+          <button class="button is-link is-success">Save Changes</button>
         </div>
       </form>
       <form @submit.prevent="updateProfile('image')">
@@ -32,7 +32,11 @@
         </div>
       </form>
       <div class="control">
-        <button class="button is-link" type="button" @click="closeModal">
+        <button
+          class="button is-link is-light"
+          type="button"
+          @click="closeModal"
+        >
           Cancel
         </button>
       </div>

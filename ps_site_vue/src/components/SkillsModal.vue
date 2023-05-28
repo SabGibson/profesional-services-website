@@ -86,7 +86,7 @@
               <button
                 type="submit"
                 class="button is-link"
-                @click="updateCertification(record)"
+                @click="updateSkilkls(record)"
               >
                 Update
               </button>
@@ -95,7 +95,7 @@
               <button
                 type="button"
                 class="button is-link is-danger"
-                @click="deleteCertification(record.id)"
+                @click="deleteSkills(record.id)"
               >
                 delete
               </button>
@@ -159,6 +159,8 @@ export default {
             date_achieved: "",
             description: "",
           };
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);
@@ -169,8 +171,9 @@ export default {
       delete updateForm.id;
 
       axios
-        .patch(`/api/v1/profile-skill/${this.record.id}/`, updateForm)
+        .patch(`/api/v1/profile-skill/${record.id}/`, updateForm)
         .then((res) => {
+          location.reload();
           this.$emit("close");
         })
         .catch((err) => {
@@ -182,6 +185,8 @@ export default {
         .delete(`/api/v1/profile-skill/${id}/`)
         .then(() => {
           this.$emit("deleted");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);

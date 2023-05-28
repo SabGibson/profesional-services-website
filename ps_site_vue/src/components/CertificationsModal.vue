@@ -182,6 +182,8 @@ export default {
             date_achieved: "",
             description: "",
           };
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);
@@ -192,8 +194,9 @@ export default {
       delete updateForm.id;
 
       axios
-        .patch(`/api/v1/profile-certification/${this.record.id}/`, updateForm)
+        .patch(`/api/v1/profile-certification/${record.id}/`, updateForm)
         .then((res) => {
+          location.reload();
           this.$emit("close");
         })
         .catch((err) => {
@@ -205,6 +208,8 @@ export default {
         .delete(`/api/v1/profile-certification/${id}/`)
         .then(() => {
           this.$emit("deleted");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);

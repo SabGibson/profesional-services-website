@@ -14,12 +14,12 @@
         <div class="new-record-form" v-if="showModal">
           <form @submit.prevent="createNewRecord">
             <div class="field">
-              <label class="label">Skill</label>
+              <label class="label">Project name</label>
               <div class="control">
                 <input
                   class="input"
                   type="text"
-                  v-model="this.newRecord.skill_name"
+                  v-model="this.newRecord.project_name"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@
             <button
               type="button"
               class="button is-link is-danger"
-              @click="deleteImage(record.id, image.id)"
+              @click="deleteImage(image.id)"
             >
               delete
             </button>
@@ -178,33 +178,48 @@ export default {
       let formData = new FormData();
       formData.append("project_name", this.newRecord.project_name);
       formData.append("description", this.newRecord.description);
-      Array.from(this.newRecord.images).forEach((image, index) => {
-        formData.append("image" + index, image);
-      });
 
       axios
-        .post("/api/v1/profile-project/", formData, formData, {
+        .post("/api/v1/profile-project/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then((res) => {
+        .then(async (res) => {
           this.newRecord = {
             project_name: "",
             description: "",
             images: "",
           };
+
+          const projectId = res.data.id;
+          for (let i = 0; i < this.newRecord.images.length; i++) {
+            let imageForm = new FormData();
+            imageForm.append("project", projectId);
+            imageForm.append("image", this.newRecord.images[i]);
+
+            await axios.post("/api/v1/profile-project-image/", imageForm, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+          }
+
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);
         });
     },
+
     async updateProject(record) {
       let updateForm = { ...record };
       delete updateForm.id;
       axios
-        .patch(`/api/v1/profile-project/${this.record.id}/`, updateForm)
+        .patch(`/api/v1/profile-project/${record.id}/`, updateForm)
         .then((res) => {
+          location.reload();
           this.$emit("close");
         })
         .catch((err) => {
@@ -232,16 +247,21 @@ export default {
         .delete(`/api/v1/profile-project-image/${id}/`)
         .then(() => {
           this.$emit("deleted");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);
         });
     },
     async deleteProject(id) {
+      console.log(id);
       axios
         .delete(`/api/v1/profile-project/${id}/`)
         .then(() => {
           this.$emit("deleted");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);

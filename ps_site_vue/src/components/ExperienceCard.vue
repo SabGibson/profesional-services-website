@@ -11,14 +11,15 @@
             <p class="is-size-6 has-text-grey has-text-weight-bold">
               {{ job.company_name }} - {{ job.level }}
             </p>
+
             <p
-              v-if="job.is_present"
+              v-if="job.date_ended"
               class="is-size-6 has-text-grey has-text-weight-bold"
             >
-              {{ job.date_started }} to Present
+              {{ job.date_started }} to {{ job.date_ended }}
             </p>
             <p v-else class="is-size-6 has-text-grey has-text-weight-bold">
-              {{ job.date_started }} to {{ job.date_ended }}
+              {{ job.date_started }} to Present
             </p>
           </div>
         </div>

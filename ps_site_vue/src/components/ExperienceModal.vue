@@ -64,12 +64,12 @@
               </div>
             </div>
             <div class="field">
-              <label class="label">Date Endeded</label>
+              <label class="label">Date Ended</label>
               <div class="control">
                 <input
                   class="input"
                   type="date"
-                  v-model="this.newRecord.date_endeded"
+                  v-model="this.newRecord.date_ended"
                 />
               </div>
             </div>
@@ -77,7 +77,7 @@
               <div class="control">
                 <label class="checkbox">
                   Is Current?
-                  <input type="checkbox" v-model="this.newRecord.is_current" />
+                  <input type="checkbox" v-model="this.newRecord.is_present" />
                 </label>
               </div>
             </div>
@@ -175,7 +175,7 @@
             <div class="control">
               <label class="checkbox">
                 Is Current?
-                <input type="checkbox" v-model="this.newRecord.is_current" />
+                <input type="checkbox" v-model="this.newRecord.is_present" />
               </label>
             </div>
           </div>
@@ -238,8 +238,8 @@ export default {
         job_title: "",
         description: "",
         date_started: "",
-        date_endeded: "",
-        is_present: "",
+        date_ended: "",
+        is_present: null,
       },
     };
   },
@@ -252,15 +252,20 @@ export default {
         job_title: "",
         description: "",
         date_started: "",
-        date_endeded: "",
-        is_present: "",
+        date_ended: "",
+        is_present: null,
       };
     },
     async createNewRecord() {
       let form = this.newRecord;
-
+      form.is_present = form.is_present ? true : false;
+      if (form.date_ended) {
+      } else {
+        form.date_ended = null;
+      }
+      console.log(form);
       axios
-        .post("/api/v1/profile-employment", form)
+        .post("/api/v1/profile-employment/", form)
         .then((res) => {
           this.newRecord = {
             company_name: "",
@@ -268,9 +273,12 @@ export default {
             job_title: "",
             description: "",
             date_started: "",
-            date_endeded: "",
-            is_present: "",
+            date_ended: "",
+            is_present: false,
           };
+          this.$emit("created");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);
@@ -279,10 +287,13 @@ export default {
     async updateExperience(record) {
       let updateForm = { ...record };
       delete updateForm.id;
+      updateForm.is_present = updateForm.is_present ? true : false;
 
+      console.log(updateForm);
       axios
-        .patch(`/api/v1/profile-employment/${this.record.id}/`, updateForm)
+        .patch(`/api/v1/profile-employment/${record.id}/`, updateForm)
         .then((res) => {
+          location.reload();
           this.$emit("close");
         })
         .catch((err) => {
@@ -294,6 +305,8 @@ export default {
         .delete(`/api/v1/profile-employment/${id}/`)
         .then(() => {
           this.$emit("deleted");
+          location.reload();
+          this.$emit("close");
         })
         .catch((err) => {
           console.error(err);

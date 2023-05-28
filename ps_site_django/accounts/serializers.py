@@ -3,16 +3,16 @@ from rest_framework import serializers
 from .models import Profile, ProfileEducation, ProfileEmployment,  ProfileProject, ProfileProjectImage, ProfileCertification, ProfileSkill
 
 
-class ProfileProjectImageSerializer(serializers.Serializer):
+class ProfileProjectImageSerializer(serializers.ModelSerializer):
     image_url = serializers.CharField(source='get_image', read_only=True)
 
     class Meta:
         model = ProfileProjectImage
-        fields = ('id', 'image', 'image_url')
+        fields = ('id', 'project', 'image', 'image_url')
 
 
 class ProfileProjectSerializer(serializers.ModelSerializer):
-    images = ProfileProjectImageSerializer(many=True, required=False)
+    images = ProfileProjectImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = ProfileProject
@@ -32,6 +32,8 @@ class ProfileCertificationSerialier(serializers.ModelSerializer):
 
 
 class ProfileEmploymentSerializer(serializers.ModelSerializer):
+    date_ended = serializers.DateField(required=False, allow_null=True)
+
     class Meta:
         model = ProfileEmployment
         fields = ('id', 'level', 'company_name', 'job_title', 'description',
